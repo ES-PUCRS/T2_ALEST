@@ -1,13 +1,20 @@
+import java.util.regex.Pattern;
+
 public class Calculadora {
+    /*
+     *  Pilha memoria: É a memória da calculadora, onde são armazenados os números a serem operados.
+     *  int recordSize: É a variável responsável por sergurar o maior tamanho alcançado pela memória.
+     *  double a, b: São as variávels que seguram os valores da pilha para serem operadas.
+     */
     private Pilha memoria;
     private int recordSize;
-    private int pilhaSize;
     double a = 0, b = 0;
 
-
+    /*
+     * O construtor instancia uma nova pilha para ser utilizada como memória
+     */
     public Calculadora(){
         memoria = new Pilha();
-        pilhaSize = 0;
     }
 
     /*
@@ -20,7 +27,10 @@ public class Calculadora {
      *   @Return
      *       • Log com as operações realizadas e resultados gerados decorrente do 'value' na entrada
      *
-     *   A calculadora funciona baseada em switch
+     *   A calculadora funciona baseada em switch para separar os comandos recebidos.
+     *      String resultReturn: Variável que contem o log de operações realizadas.
+     *      double result: Segura o resultado da operação para realizar o push na memória.
+     *   Toda vez que um novo comando é dado à calculadora, o método recordSize é chamado para salvar o tamanho da memória.
      */
     public String command(String value) {
         String resultReturn = "";
@@ -29,6 +39,12 @@ public class Calculadora {
 
 
         switch (value) {
+
+            /*
+             * Todos o métodos geram o log de execução  *
+             * As operações padrões apenas validam se é possível operar (vide método dropMemoria na linha 145)
+             * e as operam de acordo com o comando inserido. A adição na pilha é realizada após o switch.
+             */
             case "+": resultReturn = "Operation: +";
                     dropMemoria();
                     result = a + b;
@@ -56,16 +72,15 @@ public class Calculadora {
                     resultReturn += "\nvalue: " + a +
                                     "\nvalue: " + b;
                 break;
+            //Final dos métodos de operação padrão
 
             case "pop": resultReturn = "Operation: pop";
                 resultReturn += "\nValue popped: " + memoria.pop();
-                pilhaSize --;
             return resultReturn + "\n";
 
             case "dup": resultReturn = "Operation: dup";
                 memoria.push(memoria.top());
                 resultReturn += "\nValue dupped: " + memoria.top();
-                pilhaSize ++;
             return resultReturn + "\n";
 
             case "swap": resultReturn = "Operation: swap";
@@ -90,6 +105,7 @@ public class Calculadora {
                                 "\nresult: " + memoria.top();
             return resultReturn + "\n";
 
+
             /*
              *  Finaliza a calculadora.
              *  Verifica se a mesma foi finalizada corretamente (há apenas a resposta na pilha)
@@ -108,13 +124,18 @@ public class Calculadora {
                     resultReturn += "\nBiggest size of stack: " + recordSize;
                 }
                 clear();
-            return resultReturn;
+            return resultReturn + "\n";
 
             /*
              *  Caso não seja um dos operadores, o valor é validado e apenas inserido na pilha.
              */
             default:
-                    pilhaSize ++;
+                if(!Pattern.matches("[0-9]{1,}+", value)){
+                    throw new UnsupportedOperationException("Error on file: " + app.fileName +
+                                                            "\nThis operation does not exist. " +
+                                                            "\nSee if there is a letter between inserted number or " +
+                                                            "if this operator actually exists");
+                }
                     memoria.push(Double.parseDouble(value.toString()));
                     return "Value inserted: " + memoria.top() + "\n";
         }
@@ -138,11 +159,11 @@ public class Calculadora {
     private void dropMemoria(){
         if(memoria.size() < 2) {
             clear();
-            throw new ArithmeticException("You can not operate without at least two numbers");
+            throw new ArithmeticException("Error on file: " + app.fileName +
+                                          "\nYou can not operate without at least two numbers");
         }else{
             a = getDoublePop();
             b = getDoublePop();
-            pilhaSize --;
         }
     }
 
@@ -153,14 +174,11 @@ public class Calculadora {
     private void clear(){
         memoria.clear();
         recordSize = 0;
-        pilhaSize = 0;
     }
 
     /*
      *   Devido à pilha ser genérica problemas de parse apareceram, portanto
-     *   o pop da pilha é transformado em string e o valor é convertido para double
-     *   Esse método também é o responsável por contar o tamanho máximo alcançado pela
-     *   pilha 'mémória' da calculadora.
+     *   o pop da pilha é transformado em string e o valor é convertido para double.
      */
     private double getDoublePop(){
         if(memoria.isEmpty())
@@ -168,8 +186,13 @@ public class Calculadora {
         else
             return Double.parseDouble(memoria.pop().toString());
     }
+
+    /*
+     *   Esse método é o responsável por contar o tamanho máximo alcançado pela
+     *   pilha 'mémória' da calculadora.
+     */
     private void recordSize(){
-        if(pilhaSize > recordSize)
-            recordSize = pilhaSize;
+        if(memoria.size() > recordSize)
+            recordSize = memoria.size();
     }
 }

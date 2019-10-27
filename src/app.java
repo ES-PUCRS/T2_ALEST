@@ -18,13 +18,14 @@ public class app {
 
             System.out.println(calculator.command("last"));
         }
-
-//        fileName = "teste";
-//        file = FileManager.load(fileName + extension);
-//        run(calculator, file, true);
-//        System.out.println(calculator.command("last"));
     }
 
+    /*
+     * @param
+     *       • calculadora: instância da calculadora
+     *       • file: O arquivo do qual contem os valores e operações a serem realizados pela calculadora
+     *       • log: Boolean, serve para definir se será printado o log no console ou não
+     */
     public static void run(Calculadora calculadora, Pilha file, Boolean log){
         while(!file.isEmpty()) {
             try {
@@ -39,3 +40,10 @@ public class app {
         }
     }
 }
+
+
+//   Single file run; Comment 'for' file runner and use this.
+//        fileName = "teste";
+//        file = FileManager.load(fileName + extension);
+//        run(calculator, file, true);
+//        System.out.println(calculator.command("last"));
