@@ -1,7 +1,7 @@
 public class Calculadora {
     private Pilha memoria;
-    private int pilhaSize;
     private int recordSize;
+    private int pilhaSize;
     double a = 0, b = 0;
 
 
@@ -19,23 +19,29 @@ public class Calculadora {
             case "+": resultReturn = "Operation: +";
                     dropMemoria();
                     result = a + b;
-                    resultReturn += "\nvalue: " + a+
+                    resultReturn += "\nvalue: " + a +
                                     "\nvalue: " + b;
                 break;
 
             case "-": resultReturn = "Operation: -";
                     dropMemoria();
                     result = a - b;
+                    resultReturn += "\nvalue: " + a +
+                                    "\nvalue: " + b;
                 break;
 
             case "*": resultReturn = "Operation: *";
                     dropMemoria();
                     result = a * b;
+                    resultReturn += "\nvalue: " + a +
+                                    "\nvalue: " + b;
                 break;
 
             case "/": resultReturn = "Operation: /";
                     dropMemoria();
                     result = a / b;
+                    resultReturn += "\nvalue: " + a +
+                                    "\nvalue: " + b;
                 break;
 
             case "pop": resultReturn = "Operation: pop";
@@ -59,7 +65,7 @@ public class Calculadora {
 
             case "chs": resultReturn = "Operation: chs";
                 a = getDoublePop();
-                System.out.println("value: " + a);
+                resultReturn += "\nvalue: " + a;
                 memoria.push(a * -1);
                 resultReturn += "\nresult: " + memoria.top();
             return resultReturn + "\n";
@@ -72,7 +78,7 @@ public class Calculadora {
             return resultReturn + "\n";
 
 
-            case "last": resultReturn = "\nResult of file compile: "+ app.fileName + " é: ";
+            case "last": resultReturn = "\nResult of file "+ app.fileName + " compiled is: ";
                 a = getDoublePop();
                 if(!memoria.isEmpty()) {
                     resultReturn += "Error, more than one number on calculator memory. [" + a;
@@ -82,8 +88,9 @@ public class Calculadora {
                     resultReturn += "].";
                 }else {
                     resultReturn += a;
-                    resultReturn += "\nTamanho máximo da pilha é: " + recordSize;
+                    resultReturn += "\nBiggest size of stack: " + recordSize;
                 }
+                clear();
             return resultReturn;
 
 
@@ -101,16 +108,19 @@ public class Calculadora {
 
     private void dropMemoria(){
         if(memoria.size() < 2) {
+            clear();
             throw new ArithmeticException("You can not operate without at least two numbers");
         }else{
             a = getDoublePop();
-            System.out.println(a + " popped");
-
             b = getDoublePop();
-            System.out.println(b + " popped");
-
             pilhaSize --;
         }
+    }
+
+    private void clear(){
+        memoria.clear();
+        recordSize = 0;
+        pilhaSize = 0;
     }
 
     private double getDoublePop(){
