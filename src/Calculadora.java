@@ -10,10 +10,23 @@ public class Calculadora {
         pilhaSize = 0;
     }
 
+    /*
+     *   Método que recebe valor ou operando e já
+     *   realiza a função correspondente com o dado inserido.
+     *   @param
+     *       • inteiro: neste caso o número inteiro deve ser inserido na calculadora e torna-se disponível;
+     *       • +, *: as operações de soma e multiplicação são executadas com os dois últimos números disponíveis;
+     *       • -, /: as operações de subtração e divisão são realizadas com os dois últimos números disponíveis.
+     *   @Return
+     *       • Log com as operações realizadas e resultados gerados decorrente do 'value' na entrada
+     *
+     *   A calculadora funciona baseada em switch
+     */
     public String command(String value) {
         String resultReturn = "";
         double result = 0.0;
         recordSize();
+
 
         switch (value) {
             case "+": resultReturn = "Operation: +";
@@ -77,7 +90,11 @@ public class Calculadora {
                                 "\nresult: " + memoria.top();
             return resultReturn + "\n";
 
-
+            /*
+             *  Finaliza a calculadora.
+             *  Verifica se a mesma foi finalizada corretamente (há apenas a resposta na pilha)
+             *  e retorna a resposta do compile.
+             */
             case "last": resultReturn = "\nResult of file "+ app.fileName + " compiled is: ";
                 a = getDoublePop();
                 if(!memoria.isEmpty()) {
@@ -93,19 +110,31 @@ public class Calculadora {
                 clear();
             return resultReturn;
 
-
+            /*
+             *  Caso não seja um dos operadores, o valor é validado e apenas inserido na pilha.
+             */
             default:
                     pilhaSize ++;
                     memoria.push(Double.parseDouble(value.toString()));
                     return "Value inserted: " + memoria.top() + "\n";
         }
 
+        /*
+         * Após a operação ser realizada no switch anterior, o resultado é inserido na pilha.
+         * A inserção é inserida fora do switch para que não tenha um push em cada 'case'.
+         */
         memoria.push(result);
+
         resultReturn += "\nResult: " + memoria.top();
 
         return resultReturn + "\n";
     }
 
+    /*
+     *  Método de conveniência.
+     *  Tem como função verificar se é possível realizar a operação,
+     *  Também já separa os dois últimos valores que serão utilizados.
+     */
     private void dropMemoria(){
         if(memoria.size() < 2) {
             clear();
@@ -117,12 +146,22 @@ public class Calculadora {
         }
     }
 
+    /*
+     *  Limpa a calculadora após toda finalização de arquivo
+     *  *na chamada do comando "last"
+     */
     private void clear(){
         memoria.clear();
         recordSize = 0;
         pilhaSize = 0;
     }
 
+    /*
+     *   Devido à pilha ser genérica problemas de parse apareceram, portanto
+     *   o pop da pilha é transformado em string e o valor é convertido para double
+     *   Esse método também é o responsável por contar o tamanho máximo alcançado pela
+     *   pilha 'mémória' da calculadora.
+     */
     private double getDoublePop(){
         if(memoria.isEmpty())
             throw new NullPointerException();
