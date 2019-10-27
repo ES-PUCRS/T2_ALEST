@@ -14,13 +14,18 @@ public class app {
 
             file = FileManager.load(fileName + extension);
 
-            run(file, calculator, false);
+            run(calculator, file, false);
 
             System.out.println(calculator.command("last"));
         }
+
+//        fileName = "teste";
+//        file = FileManager.load(fileName + extension);
+//        run(calculator, file, true);
+//        System.out.println(calculator.command("last"));
     }
 
-    public static void run(Pilha file, Calculadora calculadora, Boolean log){
+    public static void run(Calculadora calculadora, Pilha file, Boolean log){
         while(!file.isEmpty()) {
             try {
                 if(log)
