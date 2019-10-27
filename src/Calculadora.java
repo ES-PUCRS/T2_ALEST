@@ -42,7 +42,7 @@ public class Calculadora {
 
             /*
              * Todos o métodos geram o log de execução  *
-             * As operações padrões apenas validam se é possível operar (vide método dropMemoria na linha 145)
+             * As operações padrões apenas validam se é possível operar (vide método dropMemoria na linha 159)
              * e as operam de acordo com o comando inserido. A adição na pilha é realizada após o switch.
              */
             case "+": resultReturn = "Operation: +";
