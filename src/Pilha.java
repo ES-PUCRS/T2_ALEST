@@ -1,12 +1,10 @@
-import jdk.javadoc.internal.doclets.formats.html.markup.Header;
-
-public class Pilha{
+public class Pilha<T>{
 
     private class Node{
-       Integer element;
+       T element;
        Node next;
        Node prev;
-       public Node (Integer element){
+       public Node (T element){
            this.element = element;
            next = null;
            prev = null;
@@ -27,19 +25,7 @@ public class Pilha{
         count = 0;
     }
 
-    public int pop(){
-        if(count == 0) throw new IndexOutOfBoundsException();
-        
-        Node last = trailer.prev;
-
-        trailer.prev = last.prev;
-        last.prev.next = trailer;
-        count--;
-
-        return last.element;
-    }
-
-    public void push(Integer element){
+    public void push(T element){
         Node newNode = new Node(element);
         Node last = trailer.prev;
 
@@ -50,8 +36,20 @@ public class Pilha{
 
         count ++;
     }
+    
+    public T pop(){
+        if(count == 0) throw new IndexOutOfBoundsException();
 
-    public int top(){
+        Node last = trailer.prev;
+
+        trailer.prev = last.prev;
+        last.prev.next = trailer;
+        count--;
+
+        return last.element;
+    }
+
+    public T top(){
         return trailer.prev.element;
     }
 
