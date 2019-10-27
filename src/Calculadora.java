@@ -132,7 +132,7 @@ public class Calculadora {
             default:
                 if(!Pattern.matches("[0-9]{1,}+", value)){
                     throw new UnsupportedOperationException("Error on file: " + app.fileName +
-                                                            "\nThis operation does not exist. " +
+                                                            "\nThe operation \"" + value + "\" does not exist. " +
                                                             "\nSee if there is a letter between inserted number or " +
                                                             "if this operator actually exists");
                 }
