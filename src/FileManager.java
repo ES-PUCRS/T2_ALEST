@@ -1,18 +1,24 @@
-import java.io.File;
-import java.lang.String;
-import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths; 
+import java.util.Scanner;
+import java.lang.String;
+import java.io.File;
 
 public class FileManager {
 
     public static Pilha load(String file)throws FileNotFoundException {
-        File filepath = new File("/home/cley/Desktop/ALEST/T2_ALEST/resources/" + file);
+        String path = Paths.get("").toAbsolutePath().toString();
+        path = path.replaceAll("src", "");
+        char separator = path.charAt(path.length()-1);
+        path = path + "resources" + separator;
+        
+        File filepath = new File(path + file);
         Scanner data = new Scanner(filepath);
         Pilha duracell = new Pilha();
         Pilha raiovac = new Pilha();
 
         while(data.hasNext()){
-            duracell.push(data.nextLine());
+                duracell.push(data.nextLine());
         }
 
         while(!duracell.isEmpty()) {

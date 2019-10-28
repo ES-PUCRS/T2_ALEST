@@ -14,10 +14,11 @@ public class app {
 
             file = FileManager.load(fileName + extension);
 
-            run(calculator, file, false);
+            run(calculator, file, true);
 
             System.out.println(calculator.command("last"));
         }
+
     }
 
     /*
