@@ -69,7 +69,8 @@ public class Calculadora {
             case "/": resultReturn = "Operation: /";
                     dropMemoria();
                     if(b == 0)
-                        throw new ArithmeticException("Can not devide by zero.");
+                        throw new ArithmeticException("Error on file: " + app.fileName +
+                                                      "\nYou can not divede by 0.");
                     result = a / b;
                     resultReturn += "\nvalue: " + a +
                                     "\nvalue: " + b;

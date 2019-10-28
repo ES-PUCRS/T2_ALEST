@@ -14,11 +14,10 @@ public class app {
 
             file = FileManager.load(fileName + extension);
 
-            run(calculator, file, true);
+            run(calculator, file, false);
 
             System.out.println(calculator.command("last"));
         }
-
     }
 
     /*
@@ -44,7 +43,9 @@ public class app {
 
 
 //   Single file run; Comment 'for' file runner and use this.
+//
 //        fileName = "teste";
 //        file = FileManager.load(fileName + extension);
 //        run(calculator, file, true);
 //        System.out.println(calculator.command("last"));
+//

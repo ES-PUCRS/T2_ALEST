@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
-import java.nio.file.Paths; 
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.lang.String;
 import java.io.File;
 
@@ -18,7 +19,12 @@ public class FileManager {
         Pilha raiovac = new Pilha();
 
         while(data.hasNext()){
-                duracell.push(data.nextLine());
+            String line = data.nextLine();
+
+            line = line.replaceAll(" ", "");
+
+            if(line.trim().length() != 0)
+                duracell.push(line);
         }
 
         while(!duracell.isEmpty()) {
